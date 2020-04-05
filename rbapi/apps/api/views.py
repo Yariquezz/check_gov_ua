@@ -6,7 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from apps.api.models import RBAresponse
 from apps.api.serializers import RBAresponseSerializer
 import io
-import json
 from django.http import FileResponse
 from reportlab.lib.units import inch
 from django.shortcuts import get_object_or_404
@@ -19,11 +18,11 @@ from reportlab.pdfbase import ttfonts
 from .permissions import IsCheckGov
 
 
-class Aval(APIView):
+class Enter(APIView):
     permissions_classes = IsCheckGov
 
     def loging(self, request, **kwargs):
-        logfile = '/Users/yarique/PycharmProjects/my_check_gov/rbapi/api.log'
+        logfile = 'api.log'
         with open(logfile, 'a', encoding='UTF-8') as log:
             l = ''
             if kwargs.get('message'):
