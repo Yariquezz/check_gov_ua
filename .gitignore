@@ -67,6 +67,8 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+#local_settings
+local_settings.py
 # Scrapy stuff:
 .scrapy
 
