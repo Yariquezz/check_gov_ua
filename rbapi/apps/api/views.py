@@ -59,7 +59,7 @@ class Enter(APIView):
         elif request.method == 'POST':
             message = {'messsage': 'POST method not supported!'}
             logger.info(message)
-            return Response(status.HTTP_204_NO_CONTENT)
+            return Response(message, status=status.HTTP_204_NO_CONTENT)
 
 
 class Check:
