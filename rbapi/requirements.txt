@@ -2,4 +2,5 @@ django==3.0.7
 django-jet==1.0.8
 djangorestframework==3.10.3
 djangorestframework-api-key==1.4.1
+psycopg2-binary==2.8.5
 reportlab==3.5.34

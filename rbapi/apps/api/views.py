@@ -16,24 +16,24 @@ from reportlab.pdfgen.canvas import Canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase import ttfonts
 from .permissions import IsCheckGov
+from django.shortcuts import render
+from django.utils import timezone
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def index(request):
+    now = timezone.now() + timezone.timedelta(hours=3)
+    context = {
+        'now': now,
+    }
+    logger.info('show api/index.html page with context {}'.format(context))
+    return render(request, 'api/index.html', context)
 
 
 class Enter(APIView):
     permissions_classes = IsCheckGov
-
-    def loging(self, request, **kwargs):
-        logfile = 'api.log'
-        with open(logfile, 'a', encoding='UTF-8') as log:
-            l = ''
-            if kwargs.get('message'):
-                msg = str(kwargs.get('message'))
-                rkvst = 'Request method: {} X-Time: {} X-Check-Id: {} X-Real_Ip: {} Request body: {}'.format(request.method, request.headers['X-Time'], request.headers['X-Check-Id'],request.headers['x-real-ip'], request.body)
-                l = '{} {}'.format(rkvst, msg)
-            else:
-                l = 'Request method: {} X-Time: {} X-Check-Id: {} X-Real_Ip: {} Request body {}'.format(request.method,request.headers['X-Time'], request.headers['X-Check-Id'],request.headers['x-real-ip'], request.body)
-
-            log.write('{}\n'.format(l))
-            log.close()
 
     def get(self, request):
         if request.method == 'GET':
@@ -42,23 +42,23 @@ class Enter(APIView):
                 x_check = request.headers['X-Check-Id']
                 x_ip = request.headers['x-real-ip']
             except Exception as e:
-                self.loging(request, message='Something goes wrong')
+                logger.info('Something goes wrong')
                 return Response({'messsage': 'Something goes wrong'})
             else:
                 try:
                     check = RBAresponse.objects.get(reciept_id=x_check)
                 except ObjectDoesNotExist:
                     message = {'message': 'Check is not found'}
-                    self.loging(request, message=message)
+                    logger.info(message)
                     return Response(message, status=status.HTTP_404_NOT_FOUND)
                 else:
                     serializer = RBAresponseSerializer(check)
                     message = '{}{}'.format({ "payments": [serializer.data], }, request.method)
-                    self.loging(request, message=message)
+                    logger.info(message)
                     return Response({ "payments": [serializer.data], })
         elif request.method == 'POST':
             message = {'messsage': 'POST method not supported!'}
-            self.loging(request, message=message)
+            logger.info(message)
             return Response(status.HTTP_204_NO_CONTENT)
 
 
@@ -95,4 +95,5 @@ class Check:
         buffer.seek(0)
         # FileResponse sets the Content-Disposition header so that browsers
         # present the option to save the file.
+        logger.info('Return receipt: {}'.format(cheq_body))
         return FileResponse(buffer, as_attachment=True, filename='receipt.pdf')
