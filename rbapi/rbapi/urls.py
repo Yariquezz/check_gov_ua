@@ -21,6 +21,7 @@ from apps.api import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
     path('api/', include('apps.api.urls')),
 ]
