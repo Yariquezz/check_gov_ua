@@ -17,6 +17,13 @@ class RBAresponse(models.Model):
     commissionRate = models.IntegerField(null=True, blank=False)
     link_code = models.UUIDField(default=get_default_uuid(), editable=False)
 
+    class Meta:
+        app_label = 'rbaresponse'
+        ordering = ['reciept_id']
+
+    def __str__(self):
+        return 'receipt {}'.format(self.reciept_id)
+
 
 class Receipt(models.Model):
     link = models.CharField(max_length=500, default=None, null=True)

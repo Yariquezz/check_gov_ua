@@ -11,7 +11,8 @@ class RBAresponseAdmin(admin.ModelAdmin):
         'date',
         'description',
         'currencyCode',
-        'commissionRate']
+        'commissionRate'
+    ]
 
 
 admin.site.register(RBAresponse, RBAresponseAdmin)
