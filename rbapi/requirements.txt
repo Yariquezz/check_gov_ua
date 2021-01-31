@@ -1,4 +1,4 @@
-django==2.2.4
+django==2.2.13
 django-jet==1.0.8
 djangorestframework==3.10.3
 djangorestframework-api-key==1.4.1
