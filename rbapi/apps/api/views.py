@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from apps.api.models import RBAresponse
-from apps.api.serializers import RBAresponseSerializer
+from .models import RBAresponse
+from .serializers import RBAresponseSerializer
 import io
 from django.http import FileResponse
 from reportlab.lib.units import inch
@@ -38,26 +38,30 @@ class Enter(APIView):
     def get(self, request):
         if request.method == 'GET':
             try:
-                x_time = request.headers['X-Time']
                 x_check = request.headers['X-Check-Id']
-                x_ip = request.headers['x-real-ip']
-            except Exception as e:
-                logger.info('Something goes wrong')
-                return Response({'messsage': 'Something goes wrong'})
+            except Exception as err:
+                logger.info(err)
+                return Response(
+                    {
+                        'message': 'Something goes wrong'
+                    }
+                )
             else:
                 try:
                     check = RBAresponse.objects.get(reciept_id=x_check)
                 except ObjectDoesNotExist:
-                    message = {'message': 'Check is not found'}
+                    message = {
+                        'message': 'Check is not found'
+                    }
                     logger.info(message)
                     return Response(message, status=status.HTTP_404_NOT_FOUND)
                 else:
                     serializer = RBAresponseSerializer(check)
-                    message = '{}{}'.format({ "payments": [serializer.data], }, request.method)
+                    message = '{}{}'.format({"payments": [serializer.data], }, request.method)
                     logger.info(message)
-                    return Response({ "payments": [serializer.data], })
+                    return Response({"payments": [serializer.data], })
         elif request.method == 'POST':
-            message = {'messsage': 'POST method not supported!'}
+            message = {'message': 'POST method not supported!'}
             logger.info(message)
             return Response(message, status=status.HTTP_204_NO_CONTENT)
 
@@ -81,14 +85,14 @@ class Check:
         styleB = styleSheet['BodyText']
         cheq_body = [Paragraph('Receipt # {}'.format(obj.reciept_id), styleH),
                      Paragraph('Sender: {}'.format(serializer.data['sender']), styleB),
-                     Paragraph('Receipient: {}'.format(serializer.data['recipient']), styleN),
+                     Paragraph('Recipient: {}'.format(serializer.data['recipient']), styleN),
                      Paragraph('Amount: {}'.format(serializer.data['amount'] / 100), styleN),
                      Paragraph('Description: {}'.format(serializer.data['description']), styleN),
-                     Paragraph('Comission: {}'.format(serializer.data['comissionRate']), styleN)]
+                     Paragraph('Commission: {}'.format(serializer.data['comissionRate']), styleN)]
         # Draw things on the PDF. Here's where the PDF generation happens.
         canv = Canvas(buffer)
         canv.setFont("Times-Roman", 24)
-        frm = Frame(inch, inch, 6*inch, 9*inch)
+        frm = Frame(inch, inch, 6 * inch, 9 * inch)
         frm.addFromList(cheq_body, canv)
         canv.save()
         # Close the PDF object cleanly, and we're done.

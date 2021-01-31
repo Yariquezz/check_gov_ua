@@ -23,30 +23,32 @@ def get_ip():
         # doesn't even have to be reachable
         s.connect(('10.255.255.255', 1))
         IP = s.getsockname()[0]
-    except:
+    except Exception as err:
         IP = '127.0.0.1'
+        print(err)
     finally:
         s.close()
     return IP
 
 
 def run(check):
-
     ip = get_ip()
     time = str(int(datetime.now().timestamp()))
     password = signature(check=check, time=time, word='qwerty-12345')
 
     params = {}
     url = 'http://localhost:8000/api/check'
-    response = requests.get(url=url, json=params,
-                            headers=
-                            {
-                                'Content-Type': 'application/json',
-                                'x-time': time,
-                                'x-check-id': check,
-                                'x-real-ip': ip,
-                                'x-hmac': password
-                            }).text
+    response = requests.get(
+        url=url,
+        json=params,
+        headers={
+                    'Content-Type': 'application/json',
+                    'x-time': time,
+                    'x-check-id': check,
+                    'x-real-ip': ip,
+                    'x-hmac': password
+                }
+    ).text
     return response
 
 
@@ -65,7 +67,7 @@ for j in ck:
             "date": "дата",
             "description": "призначення",
             "currencyCode": "валюта",
-            "comissionRate": "комісія",
+            "commissionRate": "комісія",
             "link_code": "скачати квитанцію тут"
         }
         for i in my_response['payments'][0]:
@@ -77,4 +79,3 @@ for j in ck:
 
 # my_response = (run('634338963'))
 # print(my_response)
-
