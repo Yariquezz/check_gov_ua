@@ -23,11 +23,11 @@ RUN pip install --upgrade pip
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
+# copy entrypoint.dev.sh
+COPY entrypoint.dev.sh .
 
 # copy project
 COPY . .
 
-# run entrypoint.sh
+# run entrypoint.dev.sh
 ENTRYPOINT ["/usr/src/checkgov/entrypoint.sh"]

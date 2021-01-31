@@ -4,7 +4,14 @@ from .models import RBAresponse
 
 
 class RBAresponseAdmin(admin.ModelAdmin):
-    list_display = ['sender', 'recipient', 'amount', 'date', 'description', 'currencyCode', 'comissionRate']
+    list_display = [
+        'sender',
+        'recipient',
+        'amount',
+        'date',
+        'description',
+        'currencyCode',
+        'commissionRate']
 
 
 admin.site.register(RBAresponse, RBAresponseAdmin)
