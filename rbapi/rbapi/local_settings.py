@@ -1,7 +1,6 @@
 import os
 
-#DEBUG = True
-DEBUG = int(os.environ.get("DEBUG", default=1))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -11,7 +10,7 @@ DATABASES = {
         'NAME': 'rbapi',
         'USER': 'django',
         'PASSWORD': 'django',
-        'HOST': 'localhost',
+        'HOST': '192.168.0.108',
         'PORT': '5432',
     }
 }
