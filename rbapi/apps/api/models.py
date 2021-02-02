@@ -18,7 +18,6 @@ class RBAresponse(models.Model):
     link_code = models.UUIDField(default=get_default_uuid(), editable=False)
 
     class Meta:
-        app_label = 'rbaresponse'
         ordering = ['reciept_id']
 
     def __str__(self):

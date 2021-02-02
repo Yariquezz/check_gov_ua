@@ -34,48 +34,50 @@ def get_ip():
 def run(check):
     ip = get_ip()
     time = str(int(datetime.now().timestamp()))
-    password = signature(check=check, time=time, word='qwerty-12345')
+    password = signature(check=check, time=time, word='qwerty-1234')
 
     params = {}
-    url = 'http://localhost:8000/api/check'
+    url = 'http://yarique.com/api/check'
     response = requests.get(
         url=url,
         json=params,
         headers={
-                    'Content-Type': 'application/json',
-                    'x-time': time,
-                    'x-check-id': check,
-                    'x-real-ip': ip,
-                    'x-hmac': password
-                }
+            'Content-Type': 'application/json',
+            'x-time': time,
+            'x-check-id': check,
+            'x-real-ip': ip,
+            'x-hmac': password
+        }
     ).text
     return response
 
 
-ck = ['634338963', '978432432', '445104511', '3456234234', '2424234234', '234234234234', '234234234234']
+if __name__ == '__main__':
 
-for j in ck:
-    check_num = j
-    resp = ""
-    my_response = json.loads(run(check_num))
+    ck = ['234234234234', '234234234234', '1', '2']
 
-    try:
-        doc = {
-            "sender": "платник",
-            "recipient": "отримувач",
-            "amount": "сумма",
-            "date": "дата",
-            "description": "призначення",
-            "currencyCode": "валюта",
-            "commissionRate": "комісія",
-            "link_code": "скачати квитанцію тут"
-        }
-        for i in my_response['payments'][0]:
-            resp += ("{}{} {}\n".format(doc[i], ":", my_response['payments'][0][i]))
-    except Exception as e:
-        print(e)
-    else:
-        print(resp)
+    for j in ck:
+        check_num = j
+        resp = ""
+        my_response = json.loads(run(check_num))
 
-# my_response = (run('634338963'))
-# print(my_response)
+        try:
+            doc = {
+                "sender": "платник",
+                "recipient": "отримувач",
+                "amount": "сумма",
+                "date": "дата",
+                "description": "призначення",
+                "currencyCode": "валюта",
+                "commissionRate": "комісія",
+                "link_code": "скачати квитанцію тут"
+            }
+            for i in my_response['payments'][0]:
+                resp += ("{}{} {}\n".format(doc[i], ":", my_response['payments'][0][i]))
+        except Exception as e:
+            print(my_response)
+        else:
+            print(resp)
+
+    my_response = (run('3'))
+    print(my_response)

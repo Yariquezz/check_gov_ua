@@ -88,10 +88,10 @@ class Check:
                      Paragraph('Recipient: {}'.format(serializer.data['recipient']), styleN),
                      Paragraph('Amount: {}'.format(serializer.data['amount'] / 100), styleN),
                      Paragraph('Description: {}'.format(serializer.data['description']), styleN),
-                     Paragraph('Commission: {}'.format(serializer.data['comissionRate']), styleN)]
+                     Paragraph('Commission: {}'.format(serializer.data['commissionRate']), styleN)]
         # Draw things on the PDF. Here's where the PDF generation happens.
         canv = Canvas(buffer)
-        canv.setFont("Times-Roman", 24)
+        canv.setFont("Arial", 24)
         frm = Frame(inch, inch, 6 * inch, 9 * inch)
         frm.addFromList(cheq_body, canv)
         canv.save()
