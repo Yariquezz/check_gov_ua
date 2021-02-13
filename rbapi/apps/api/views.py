@@ -33,7 +33,8 @@ def index(request):
 
 
 class Enter(APIView):
-    permissions_classes = IsCheckGov
+
+    permissions_classes = [IsCheckGov]
 
     def get(self, request):
         if request.method == 'GET':
@@ -71,7 +72,7 @@ class Check:
     @permission_classes([AllowAny])
     def get_check(request, **kwargs):
 
-        MyFontObject = ttfonts.TTFont('Arial', '../rbapi/static/fonts/arial.ttf')
+        MyFontObject = ttfonts.TTFont('Arial', '../rbapi/apps/api/static/fonts/arial.ttf')
         pdfmetrics.registerFont(MyFontObject)
 
         obj = get_object_or_404(RBAresponse, link_code=kwargs.get('link_id'))
@@ -88,7 +89,7 @@ class Check:
                      Paragraph('Recipient: {}'.format(serializer.data['recipient']), styleN),
                      Paragraph('Amount: {}'.format(serializer.data['amount'] / 100), styleN),
                      Paragraph('Description: {}'.format(serializer.data['description']), styleN),
-                     Paragraph('Commission: {}'.format(serializer.data['comissionRate']), styleN)]
+                     Paragraph('Commission: {}'.format(serializer.data['commissionRate']), styleN)]
         # Draw things on the PDF. Here's where the PDF generation happens.
         canv = Canvas(buffer)
         canv.setFont("Times-Roman", 24)
