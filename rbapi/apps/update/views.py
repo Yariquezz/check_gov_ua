@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from apps.update.serializers import UpdateBaseSerializer
+from rest_framework.permissions import AllowAny
 from .permissions import IsRO
+from apps.update.serializers import UpdateBaseSerializer
 import logging
 
 logger = logging.getLogger(__name__)
@@ -10,11 +11,7 @@ logger = logging.getLogger(__name__)
 
 class UpdateBase(APIView):
 
-    permissions_classes = [IsRO]
-
-    def get(self, request):
-
-        return Response(status.HTTP_404_NOT_FOUND)
+    permission_classes = [IsRO]
 
     def post(self, request):
 

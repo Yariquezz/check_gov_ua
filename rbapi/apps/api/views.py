@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from .models import RBAresponse
@@ -34,7 +34,7 @@ def index(request):
 
 class Enter(APIView):
 
-    permissions_classes = IsCheckGov
+    permission_classes = [IsCheckGov]
 
     def get(self, request):
 
@@ -50,7 +50,6 @@ class Enter(APIView):
         else:
             try:
                 check = RBAresponse.objects.get(reciept_id=x_check)
-                self.check_object_permissions(request, check)
             except ObjectDoesNotExist:
                 message = {
                     'message': 'Check is not found'
@@ -69,7 +68,7 @@ class Check:
     @permission_classes([AllowAny])
     def get_check(request, **kwargs):
 
-        MyFontObject = ttfonts.TTFont('Arial', '../rbapi/static/fonts/arial.ttf')
+        MyFontObject = ttfonts.TTFont('Arial', '../rbapi/apps/api/static/fonts/arial.ttf')
         pdfmetrics.registerFont(MyFontObject)
 
         obj = get_object_or_404(RBAresponse, link_code=kwargs.get('link_id'))

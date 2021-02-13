@@ -5,6 +5,7 @@ from .models import RBAresponse
 
 class RBAresponseAdmin(admin.ModelAdmin):
     list_display = [
+        'reciept_id',
         'sender',
         'recipient',
         'amount',

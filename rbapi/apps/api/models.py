@@ -7,7 +7,7 @@ def get_default_uuid():
 
 
 class RBAresponse(models.Model):
-    reciept_id = models.IntegerField()
+    reciept_id = models.IntegerField(unique=True)
     sender = models.CharField(max_length=200, default=None, null=True)
     recipient = models.CharField(max_length=200, default=None, null=True)
     amount = models.IntegerField(null=True, blank=False)

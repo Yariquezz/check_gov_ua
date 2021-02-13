@@ -136,7 +136,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-        #'apps.api.permissions.IsCheckGov'
     ],
 
 }
