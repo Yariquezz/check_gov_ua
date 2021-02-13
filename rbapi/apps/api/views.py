@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from .models import RBAresponse
@@ -33,37 +33,35 @@ def index(request):
 
 
 class Enter(APIView):
+
     permissions_classes = IsCheckGov
 
     def get(self, request):
-        if request.method == 'GET':
+
+        try:
+            x_check = request.headers['X-Check-Id']
+        except Exception as err:
+            logger.info(err)
+            return Response(
+                {
+                    'message': 'Something goes wrong'
+                }
+            )
+        else:
             try:
-                x_check = request.headers['X-Check-Id']
-            except Exception as err:
-                logger.info(err)
-                return Response(
-                    {
-                        'message': 'Something goes wrong'
-                    }
-                )
+                check = RBAresponse.objects.get(reciept_id=x_check)
+                self.check_object_permissions(request, check)
+            except ObjectDoesNotExist:
+                message = {
+                    'message': 'Check is not found'
+                }
+                logger.info(message)
+                return Response(message, status=status.HTTP_404_NOT_FOUND)
             else:
-                try:
-                    check = RBAresponse.objects.get(reciept_id=x_check)
-                except ObjectDoesNotExist:
-                    message = {
-                        'message': 'Check is not found'
-                    }
-                    logger.info(message)
-                    return Response(message, status=status.HTTP_404_NOT_FOUND)
-                else:
-                    serializer = RBAresponseSerializer(check)
-                    message = '{}{}'.format({"payments": [serializer.data], }, request.method)
-                    logger.info(message)
-                    return Response({"payments": [serializer.data], })
-        elif request.method == 'POST':
-            message = {'message': 'POST method not supported!'}
-            logger.info(message)
-            return Response(message, status=status.HTTP_204_NO_CONTENT)
+                serializer = RBAresponseSerializer(check)
+                message = '{}{}'.format({"payments": [serializer.data], }, request.method)
+                logger.info(message)
+                return Response({"payments": [serializer.data], })
 
 
 class Check:
@@ -88,7 +86,7 @@ class Check:
                      Paragraph('Recipient: {}'.format(serializer.data['recipient']), styleN),
                      Paragraph('Amount: {}'.format(serializer.data['amount'] / 100), styleN),
                      Paragraph('Description: {}'.format(serializer.data['description']), styleN),
-                     Paragraph('Commission: {}'.format(serializer.data['comissionRate']), styleN)]
+                     Paragraph('Commission: {}'.format(serializer.data['commissionRate']), styleN)]
         # Draw things on the PDF. Here's where the PDF generation happens.
         canv = Canvas(buffer)
         canv.setFont("Times-Roman", 24)

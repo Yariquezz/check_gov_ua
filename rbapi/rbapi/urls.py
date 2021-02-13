@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from apps.api import views
 
 urlpatterns = [
@@ -23,4 +23,5 @@ urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
     path('api/', include('apps.api.urls')),
+    path('update', include('apps.update.urls')),
 ]
