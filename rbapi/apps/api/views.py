@@ -3,22 +3,16 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import FileResponse, Http404
+from rest_framework.decorators import api_view, permission_classes
 from .models import RBAresponse
 from .serializers import RBAresponseSerializer
-import io
-from django.http import FileResponse
-from reportlab.lib.units import inch
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view, permission_classes
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph, Frame
-from reportlab.pdfgen.canvas import Canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase import ttfonts
 from .permissions import IsCheckGov
 from django.shortcuts import render
 from django.utils import timezone
+from .create_pdf import CreateFile
 import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -64,37 +58,24 @@ class Enter(APIView):
 
 
 class Check:
+
     @api_view(['GET'])
     @permission_classes([AllowAny])
     def get_check(request, **kwargs):
 
-        MyFontObject = ttfonts.TTFont('Arial', '../rbapi/apps/api/static/fonts/arial.ttf')
-        pdfmetrics.registerFont(MyFontObject)
+        try:
+            obj = RBAresponse.objects.get(link_code=kwargs['link_id'])
+        except Exception as err:
+            logger.info("Receipt is not found %s" % err)
+            return Http404("Receipt is not found")
+        else:
+            check = CreateFile()
+            buffer = check.get_pdf(obj)
 
-        obj = get_object_or_404(RBAresponse, link_code=kwargs.get('link_id'))
-        serializer = RBAresponseSerializer(obj)
-
-        buffer = io.BytesIO()
-        # Create a file-like buffer to receive PDF data.
-        styleSheet = getSampleStyleSheet()
-        styleH = styleSheet['Heading1']
-        styleN = styleSheet['Normal']
-        styleB = styleSheet['BodyText']
-        cheq_body = [Paragraph('Receipt # {}'.format(obj.reciept_id), styleH),
-                     Paragraph('Sender: {}'.format(serializer.data['sender']), styleB),
-                     Paragraph('Recipient: {}'.format(serializer.data['recipient']), styleN),
-                     Paragraph('Amount: {}'.format(serializer.data['amount'] / 100), styleN),
-                     Paragraph('Description: {}'.format(serializer.data['description']), styleN),
-                     Paragraph('Commission: {}'.format(serializer.data['commissionRate']), styleN)]
-        # Draw things on the PDF. Here's where the PDF generation happens.
-        canv = Canvas(buffer)
-        canv.setFont("Times-Roman", 24)
-        frm = Frame(inch, inch, 6 * inch, 9 * inch)
-        frm.addFromList(cheq_body, canv)
-        canv.save()
-        # Close the PDF object cleanly, and we're done.
-        buffer.seek(0)
         # FileResponse sets the Content-Disposition header so that browsers
         # present the option to save the file.
-        logger.info('Return receipt: {}'.format(cheq_body))
+
         return FileResponse(buffer, as_attachment=True, filename='receipt.pdf')
+
+
+
