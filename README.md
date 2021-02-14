@@ -1,4 +1,4 @@
-### API for check.goc.ua ###
+### API for check.gov.ua ###
 
 # check_gov_ua #check.gov.ua
 
@@ -30,5 +30,3 @@ In creating pdf module, you can change template for receipt on your own.
 For support cyrillic I am using the DejaVuSerif font, but you can add another one.
 
 It's just example. For more information check the documentation https://www.reportlab.com/docs/reportlab-userguide.pdf
-
-##################
