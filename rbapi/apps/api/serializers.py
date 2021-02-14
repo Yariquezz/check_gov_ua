@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.api.models import RBAresponse, Receipt
+from apps.api.models import RBAresponse
 from datetime import datetime
 from django.conf import settings
 
@@ -34,3 +34,4 @@ class RBAresponseSerializer(serializers.ModelSerializer):
             'commissionRate',
             'link_code',
         ]
+
