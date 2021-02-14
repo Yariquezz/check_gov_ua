@@ -167,6 +167,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'api.log'),
+            'formatter': 'verbose',
         },
     },
     'loggers': {
