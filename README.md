@@ -1,3 +1,5 @@
+### API for check.goc.ua ###
+
 # check_gov_ua #check.gov.ua
 
 API for state check receipt service
@@ -7,7 +9,7 @@ Using Python3.7 and Django ver. 3.0
 
 For update static do not forget use python3 manage.py collectstatic
 
-##### API #####
+#### API ####
 
 You can run this service as standalone or as docker. In docker image I'm using PostgreSQL as DB and Nginx as web server. On my own it's working fine with it.
 
