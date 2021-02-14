@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import FileResponse, Http404
+from django.http import FileResponse
 from rest_framework.decorators import api_view, permission_classes
 from .models import RBAresponse
 from .serializers import RBAresponseSerializer
@@ -67,7 +67,8 @@ class Check:
             obj = RBAresponse.objects.get(link_code=kwargs['link_id'])
         except Exception as err:
             logger.info("Receipt is not found %s" % err)
-            return Http404("Receipt is not found")
+            message = "Receipt is not found"
+            return Response(message, status=status.HTTP_404_NOT_FOUND)
         else:
             check = CreateFile()
             buffer = check.get_pdf(obj)
