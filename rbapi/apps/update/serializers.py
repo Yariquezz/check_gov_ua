@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from apps.api.models import RBAresponse
+from apps.api.models import RBAResponse
 
 
 class UpdateBaseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RBAresponse
+        model = RBAResponse
         fields = [
-            'reciept_id',
+            'receipt_id',
             'sender',
             'recipient',
             'amount',

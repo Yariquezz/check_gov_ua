@@ -61,7 +61,7 @@ DATABASES = {
         "NAME": os.environ.get("SQL_DATABASE", "rbapi"),
         "USER": os.environ.get("SQL_USER", "django"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "django"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "HOST": os.environ.get("SQL_HOST", "3.121.196.80"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
