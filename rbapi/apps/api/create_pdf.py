@@ -6,8 +6,8 @@ from reportlab.platypus import Paragraph, Frame
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase import ttfonts
-from .serializers import RBAresponseSerializer
-from .models import RBAresponse, BankInfo
+from .serializers import RBAResponseSerializer
+from .models import BankInfo
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class CreateFile:
     def get_pdf(obj):
         # Get Receipt INFO from serializer
 
-        serializer = RBAresponseSerializer(obj)
+        serializer = RBAResponseSerializer(obj)
         bank_info = BankInfo.objects.get(tax_code=obj.sender_bank_tax_code.tax_code)
 
         # Create a file-like buffer to receive PDF data.
@@ -83,12 +83,11 @@ class CreateFile:
         check_body.append(Paragraph(f'\n<br />\n<br />', style_normal))
 
         # Add title
-        check_body.append(Paragraph(f'<strong>Квитанція № {obj.reciept_id}</strong>', style_bold))
+        check_body.append(Paragraph(f'<strong>Квитанція № {obj.receipt_id}</strong>', style_bold))
         check_body.append(Paragraph(f"<strong>Платник:</strong> {serializer.data['sender']}", style_normal))
         check_body.append(Paragraph(f"<strong>Отримувач:</strong> {serializer.data['recipient']}", style_normal))
         check_body.append(Paragraph(f"<strong>Сума:</strong> {serializer.data['amount']}", style_normal))
-        check_body.append(
-            Paragraph(f"<strong>Призначення платежу:</strong> {serializer.data['description']}", style_normal))
+        check_body.append(Paragraph(f"<strong>Призначення платежу:</strong> {serializer.data['description']}", style_normal))
         check_body.append(Paragraph(f"<strong>Комісія:</strong> {serializer.data['commissionRate']}", style_normal))
 
         # Add breaklines

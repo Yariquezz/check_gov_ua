@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models import RBAresponse, BankInfo
+from .models import RBAResponse, BankInfo
 
 
-class RBAresponseAdmin(admin.ModelAdmin):
+class RBAResponseAdmin(admin.ModelAdmin):
     list_display = [
-        'reciept_id',
+        'receipt_id',
         'sender',
         'recipient',
         'amount',
@@ -33,5 +33,5 @@ class BankInfoAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(RBAresponse, RBAresponseAdmin)
+admin.site.register(RBAResponse, RBAResponseAdmin)
 admin.site.register(BankInfo, BankInfoAdmin)

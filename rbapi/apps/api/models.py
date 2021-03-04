@@ -30,8 +30,8 @@ class BankInfo(models.Model):
         return '{} {}'.format(self.bank_name, self.tax_code)
 
 
-class RBAresponse(models.Model):
-    reciept_id = models.IntegerField(primary_key=True, unique=True)
+class RBAResponse(models.Model):
+    receipt_id = models.IntegerField(primary_key=True, unique=True)
     sender = models.CharField(max_length=200, default=None, null=True)
     recipient = models.CharField(max_length=200, default=None, null=True)
     amount = models.IntegerField(null=True, blank=False)
@@ -56,9 +56,9 @@ class RBAresponse(models.Model):
 
     class Meta:
         ordering = [
-            'reciept_id',
+            'receipt_id',
             'date'
         ]
 
     def __str__(self):
-        return 'receipt {}'.format(self.reciept_id)
+        return 'receipt {}'.format(self.receipt_id)
