@@ -78,7 +78,7 @@ class Enter(APIView):
         else:
             try:
                 check = RBAResponse.objects.get(receipt_id=x_check)
-                bank = Ba
+                bank = BankInfo.objects.get(pk=check.sender_bank_tax_code_id)
             except ObjectDoesNotExist:
                 message = {
                     'message': 'Check is not found'

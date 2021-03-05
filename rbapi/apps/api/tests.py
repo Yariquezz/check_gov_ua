@@ -34,7 +34,7 @@ def get_ip():
 def run(check):
     ip = get_ip()
     time = str(int(datetime.now().timestamp()))
-    password = signature(check=check, time=time, word='qwerty-12345')
+    password = signature(check=check, time=time, word='12345')
 
     params = {}
     url = 'http://localhost:8000/api/check'
@@ -51,8 +51,6 @@ def run(check):
     ).text
     return response
 
-
-ck = ['634338963', '978432432', '445104511', '3456234234', '2424234234', '234234234234', '234234234234', '2000']
 
 ck = ['2000', '2001', '2002', '2003', '2004', '2005', '2006']
 
@@ -74,8 +72,8 @@ for j in ck:
         }
         for i in my_response['payments'][0]:
             resp += ("{}{} {}\n".format(doc[i], ":", my_response['payments'][0][i]))
-    except Exception as e:
-        print(e)
+    except Exception as err:
+        print('Error: {}'.format(err))
     else:
         print(resp)
 
