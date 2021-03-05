@@ -20,10 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = os.environ.get("SECRET_KEY", 'lob2t$8)n*-lh#40k7$d5v(y4vlm1%v%q_%ci261^g=q)(!--c')
-# API_KEY = os.environ.get("API_KEY", '12345')
-API_KEY = '12345'
+API_KEY = os.environ.get("API_KEY", '12345')
 DEBUG = int(os.environ.get("DEBUG", default=1))
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(" ")
 HOSTNAME = os.environ.get('HOSTNAME', default='localhost')
 # Application definition
 
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps',
     'apps.api',
+    'apps.update',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +136,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-        'apps.api.permissions.IsCheckGov',
     ],
 
 }
@@ -168,6 +167,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'api.log'),
+            'formatter': 'verbose',
         },
     },
     'loggers': {

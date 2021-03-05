@@ -52,7 +52,7 @@ def run(check):
     return response
 
 
-ck = ['2000', '2001']
+ck = ['2000', '2001', '2002', '2003', '2004', '2005', '2006']
 
 for j in ck:
     check_num = j
@@ -77,5 +77,5 @@ for j in ck:
     else:
         print(resp)
 
-my_response = (run('2001'))
+my_response = (run('2000'))
 print(my_response)

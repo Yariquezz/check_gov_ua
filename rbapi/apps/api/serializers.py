@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from apps.api.models import RBAresponse, Receipt
+from apps.api.models import RBAResponse
 from datetime import datetime
 from django.conf import settings
 
 
-class RBAresponseSerializer(serializers.ModelSerializer):
+class RBAResponseSerializer(serializers.ModelSerializer):
     sender = serializers.CharField(read_only=True)
     recipient = serializers.CharField(read_only=True)
     amount = serializers.IntegerField(read_only=True)
@@ -23,7 +23,7 @@ class RBAresponseSerializer(serializers.ModelSerializer):
         return normal_date
 
     class Meta:
-        model = RBAresponse
+        model = RBAResponse
         fields = [
             'sender',
             'recipient',
@@ -34,3 +34,4 @@ class RBAresponseSerializer(serializers.ModelSerializer):
             'commissionRate',
             'link_code',
         ]
+
