@@ -19,11 +19,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = os.environ.get("SECRET_KEY", 'lob2t$8)n*-lh#40k7$d5v(y4vlm1%v%q_%ci261^g=q)(!--c')
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", 'lob2t$8)n*-lh#40k7$d5v(y4vlm1%v%q_%ci261^g=q)(!--c')
 API_KEY = os.environ.get("API_KEY", '12345')
-DEBUG = int(os.environ.get("DEBUG", default=1))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(" ")
-HOSTNAME = os.environ.get('HOSTNAME', default='localhost')
+PERMITTED_HOSTS = os.environ.get(
+    "PERMITTED_HOSTS", ['192.168.0.105', '192.168.0.100', '192.168.0.102'])
+HOSTNAME = os.environ.get('HOSTNAME', default='localhost:8000')
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,7 +64,7 @@ DATABASES = {
         "NAME": os.environ.get("SQL_DATABASE", "rbapi"),
         "USER": os.environ.get("SQL_USER", "django"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "django"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "HOST": os.environ.get("SQL_HOST", "192.168.0.108"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
