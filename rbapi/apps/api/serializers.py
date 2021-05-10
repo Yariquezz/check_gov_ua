@@ -15,7 +15,7 @@ class RBAResponseSerializer(serializers.ModelSerializer):
     link_code = serializers.SerializerMethodField()
 
     def get_link_code(self, obj):
-        link = 'http://{}:8000/api/{}'.format(settings.HOSTNAME, obj.link_code)
+        link = 'http://{}/api/{}'.format(settings.HOSTNAME, obj.link_code)
         return link
 
     def get_date(self, obj):
@@ -34,4 +34,3 @@ class RBAResponseSerializer(serializers.ModelSerializer):
             'commissionRate',
             'link_code',
         ]
-
