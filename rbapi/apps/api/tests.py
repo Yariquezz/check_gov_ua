@@ -77,5 +77,4 @@ for j in ck:
     else:
         print(resp)
 
-my_response = (run('2000'))
-print(my_response)
+print(signature(1, t)
