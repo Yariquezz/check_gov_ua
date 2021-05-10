@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Check</title>
 </head>
+
 <body>
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 
-{{ now }}
+    {{ now }}
 
-{% if check %}
+    {% if check %}
 
-<h1> Квитанція {{ check.receipt_id }}</h1>
-<p>
-    <strong>Платник: </strong> {{ check.sender }} <br/>
-    <strong>Отримувач: </strong> {{ check.recipient }} <br/>
-    <strong>Сума: </strong> {{ check.amount }} <br/>
-    <strong>Призначення платежу: </strong>{{ check.description }} <br/>
+    <h1> Квитанція {{ check.receipt_id }}</h1>
+    <p>
+        <strong>Платник: </strong> {{ check.sender }} <br />
+        <strong>Отримувач: </strong> {{ check.recipient }} <br />
+        <strong>Сума: </strong> {{ check.amount }} UAH<br />
+        <strong>Призначення платежу: </strong>{{ check.description }} <br />
 
-{% if  check.commissionRate > 0 %}
-    <strong>Комісія:</strong> {{ check.commissionRate }} <br/>
-{% endif %}
-    <strong>Банк відправника: </strong>{{ bank }} <br/>
+        {% if check.commissionRate > 0 %}
+        <strong>Комісія:</strong> {{ check.commissionRate }} <br />
+        {% endif %}
+        <strong>Банк відправника: </strong>{{ bank }} <br />
+        <strong>Скачати квитанцію </strong><a href="http://localhost:8000/api/{{ check.link_code }}">тут</a> <br />
 
-</p>
-{% else %}
+    </p>
+    {% else %}
 
-<h3>Check is not found</h3>
+    <h3>Check is not found</h3>
 
-{% endif %}
+    {% endif %}
 
-<a href="../"><button>Знайти ще?</button></a>
+    <a href="../"><button>Знайти ще?</button></a>
 
 </body>
+
 </html>
