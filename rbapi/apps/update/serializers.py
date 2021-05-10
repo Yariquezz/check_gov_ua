@@ -11,7 +11,8 @@ class UpdateBaseSerializer(serializers.ModelSerializer):
             'recipient',
             'amount',
             'date',
-            'description', 
-            'currencyCode', 
+            'description',
+            'currencyCode',
             'commissionRate',
+            'sender_bank_tax_code'
         ]
