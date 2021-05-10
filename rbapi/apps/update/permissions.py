@@ -1,5 +1,5 @@
 from rest_framework import permissions
-
+from django.conf import settings
 
 class IsRO(permissions.BasePermission):
 
@@ -8,4 +8,4 @@ class IsRO(permissions.BasePermission):
     def has_permission(self, request, view):
         IP = request.headers['X-Ip']
 
-        return IP in ['192.168.0.105', '192.168.0.100', '192.168.0.102']
+        return IP in settings.PERMITTED_HOSTS
