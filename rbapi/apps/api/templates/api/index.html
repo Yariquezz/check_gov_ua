@@ -5,10 +5,18 @@
     <title>Check</title>
 </head>
 <body>
-<h1>Hello!</h1>
+<h1>API check.gov.ua demo!</h1>
 {% block body %}{% endblock %}
 
 {{ now }}
+
+    <form id="search_check" action="{% url 'index_page' %}" role="form" method="post">{% csrf_token %}
+        <div class="input-group" style="max-width:600px;">
+            {{ form.check_id }}
+            <button type="submit">Знайти квитанцію</button>
+            </div>
+        </div>
+    </form>
 
 </body>
 </html>

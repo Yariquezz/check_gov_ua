@@ -14,4 +14,5 @@ class IsCheckGov(permissions.BasePermission):
         message = bytes("{}{}".format(request.headers['X-Check-Id'], request.headers['X-Time']), 'utf-8')
         secret = bytes(settings.API_KEY, 'utf-8')
         signature = base64.b64encode(hmac.new(secret, message, digestmod=hashlib.sha256).digest()).decode('utf-8')
+
         return signature == password
