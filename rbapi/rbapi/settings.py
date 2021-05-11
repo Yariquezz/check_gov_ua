@@ -27,6 +27,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(" ")
 PERMITTED_HOSTS = os.environ.get(
     "PERMITTED_HOSTS", ['192.168.0.105', '192.168.0.100', '192.168.0.102'])
 HOSTNAME = os.environ.get('HOSTNAME', default='localhost:8000')
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Application definition
 
 INSTALLED_APPS = [
