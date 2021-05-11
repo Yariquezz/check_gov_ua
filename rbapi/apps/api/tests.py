@@ -35,30 +35,25 @@ def run(check):
     ip = get_ip()
     time = str(int(datetime.now().timestamp()))
     password = signature(check=check, time=time, word='12345')
-
     params = {}
-    url = 'http://localhost:8000/api/check'
+    url = 'http://yarique.com/api/check'
     response = requests.get(
         url=url,
         json=params,
         headers={
-                    'Content-Type': 'application/json',
-                    'x-time': time,
-                    'x-check-id': check,
-                    'x-real-ip': ip,
-                    'x-hmac': password
-                }
+            'Content-Type': 'application/json',
+            'x-time': time,
+            'x-check-id': check,
+            'x-real-ip': ip,
+            'x-hmac': password
+        }
     ).text
     return response
 
 
-ck = ['2000', '2001', '2002', '2003', '2004', '2005', '2006']
+if __name__ == '__main__':
 
-for j in ck:
-    check_num = j
-    resp = ""
-    my_response = json.loads(run(check_num))
-
+    ck = ['234234234234', '234234234234', '1', '2']
     try:
         doc = {
             "sender": "платник",
@@ -76,5 +71,3 @@ for j in ck:
         print('Error: {}'.format(err))
     else:
         print(resp)
-
-print(signature(1, t)

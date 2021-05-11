@@ -97,7 +97,6 @@ class Check:
     @api_view(['GET'])
     @permission_classes([AllowAny])
     def get_check(request, **kwargs):
-
         try:
             obj = RBAResponse.objects.get(link_code=kwargs['link_id'])
         except Exception as err:
@@ -112,6 +111,3 @@ class Check:
         # present the option to save the file.
 
         return FileResponse(buffer, as_attachment=True, filename='receipt.pdf')
-
-
-
