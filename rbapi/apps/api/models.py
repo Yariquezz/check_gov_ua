@@ -7,7 +7,7 @@ def get_default_uuid():
 
 
 class BankInfo(models.Model):
-    tax_code = models.IntegerField(primary_key=True)
+    tax_code = models.CharField(primary_key=True, max_lenght=20)
     bank_name = models.CharField(max_length=200, default=None, null=True)
     support_number_1 = models.CharField(max_length=13, default=None, null=True)
     support_number_2 = models.CharField(max_length=13, default=None, null=True)
