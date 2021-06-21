@@ -7,7 +7,7 @@ def get_default_uuid():
 
 
 class BankInfo(models.Model):
-    tax_code = models.CharField(primary_key=True, max_lenght=20)
+    tax_code = models.IntegerField(unique=True, null=True)
     bank_name = models.CharField(max_length=200, default=None, null=True)
     support_number_1 = models.CharField(max_length=13, default=None, null=True)
     support_number_2 = models.CharField(max_length=13, default=None, null=True)
@@ -31,7 +31,7 @@ class BankInfo(models.Model):
 
 
 class RBAResponse(models.Model):
-    receipt_id = models.IntegerField(primary_key=True, unique=True)
+    receipt_id = models.CharField(primary_key=True, unique=True, max_length=20, db_index=True)
     sender = models.CharField(max_length=200, default=None, null=True)
     recipient = models.CharField(max_length=200, default=None, null=True)
     amount = models.IntegerField(null=True, blank=False)
@@ -49,7 +49,7 @@ class RBAResponse(models.Model):
     sender_bank_tax_code = models.ForeignKey(
         BankInfo,
         default=None,
-        null=True,
+        null=False,
         related_name='sender_bank_tax_code',
         on_delete=models.CASCADE
     )
