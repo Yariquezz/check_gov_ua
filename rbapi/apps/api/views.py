@@ -16,8 +16,9 @@ from .forms import SearchCheck
 
 logger = logging.getLogger(__name__)
 
+
 def index(request):
-    now = timezone.now() + timezone.timedelta(hours=3)
+    now = timezone.now()
     form = SearchCheck(request.POST)
 
     context = {
@@ -87,7 +88,8 @@ class Enter(APIView):
                 return Response(message, status=status.HTTP_404_NOT_FOUND)
             else:
                 serializer = RBAResponseSerializer(check)
-                message = '{}{}'.format({"payments": [serializer.data], }, request.method)
+                message = '{}{}'.format(
+                    {"payments": [serializer.data], }, request.method)
                 logger.info(message)
                 return Response({"payments": [serializer.data], })
 
