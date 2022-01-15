@@ -11,11 +11,10 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
 echo "Makemigrations..."
 python manage.py makemigrations
 echo "Migrate..."
-python manage.py createsuperuser --username=$SUPERUSER_ADMIN --password=$SUPERUSER_PASSWORD --email=$SUPERUSER_EMAIL
+python manage.py createsuperuser --noinput --username=$DJANGO_SUPERUSER_ADMIN --email=$DJANGO_SUPERUSER_EMAIL 
 echo "Create superuser..."
 python manage.py migrate
 echo "Collectstatic..."
