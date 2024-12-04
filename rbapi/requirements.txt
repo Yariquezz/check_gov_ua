@@ -2,5 +2,5 @@ django==3.2.18
 django-3-jet
 djangorestframework
 psycopg2-binary
-reportlab==3.5.67
+reportlab==3.6.13
 gunicorn
