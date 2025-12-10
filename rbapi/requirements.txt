@@ -1,4 +1,4 @@
-django==4.2.26
+django==4.2.27
 django-3-jet
 djangorestframework
 psycopg2-binary
